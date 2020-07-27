@@ -1,2 +1,4 @@
 # CanvasFun
-Playing around with HTML canvas
+Playing around with HTML canvas...
+
+
