@@ -3,12 +3,10 @@
 // TODO:
 // https://youtu.be/vxljFhP2krI?t=1280
 
-const numberOfCircles = 200;
-const circleArray = [];
+const numberOfCircles = 100;
+let circleArray = [];
 
 const canvas = document.querySelector('.canvas');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
 const context = canvas.getContext('2d');
 const maxCircleRadius = 500;
@@ -38,8 +36,8 @@ function createCircles(numberOfCircles) {
     const radius = Math.random() * 50 + 1;
     const x = Math.random() * (canvas.width - radius * 2) + radius;
     const y = Math.random() * (canvas.height - radius * 2) + radius;
-    const dx = (Math.random() - 0.5) * 5;
-    const dy = (Math.random() - 0.5) * 5;
+    const dx = (Math.random() - 0.5) * 2;
+    const dy = (Math.random() - 0.5) * 2;
     const color = colorArray[Math.floor(Math.random() * colorArray.length)];
 
     const circle = new Circle(x, y, radius, dx, dy, color);
@@ -97,17 +95,47 @@ function animate() {
 }
 
 // =======
-createCircles(numberOfCircles);
-animate();
-// console.log(circleArray);
+// Interactions update mouse position
 
-// ? on canvas
+// should this event handler be bound to the canvas rather than the window?
 window.addEventListener('mousemove', (event) => {
   mouse.x = event.x;
   mouse.y = event.y;
 });
 
-window.addEventListener('resize', (event) => {
+// =======
+// window resize debounce
+let timeout = false;
+const delay = 250;
+
+// do something once the resize has completed
+function getDimensions() {
+  console.log(
+    `called getDimensions: width: ${window.innerWidth}, height: ${window.innerHeight}`
+  );
+
+  // set new canvas dimesions
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
+  // kick off or re-paint canvas
+  createCircles(numberOfCircles);
+  animate();
+}
+
+// window.resize event listener
+window.addEventListener('resize', function () {
+  // clear the circles from the page
+  circleArray = [];
+  console.log(circleArray);
+
+  // clear the timeout
+  clearTimeout(timeout);
+  // start timing for event "completion"
+  timeout = setTimeout(getDimensions, delay);
 });
+
+// start execution on load
+window.onload = () => {
+  getDimensions();
+};
