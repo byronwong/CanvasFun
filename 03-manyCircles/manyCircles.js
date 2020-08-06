@@ -36,8 +36,8 @@ function createCircles(numberOfCircles) {
     const radius = Math.random() * 50 + 1;
     const x = Math.random() * (canvas.width - radius * 2) + radius;
     const y = Math.random() * (canvas.height - radius * 2) + radius;
-    const dx = (Math.random() - 0.5) * 2;
-    const dy = (Math.random() - 0.5) * 2;
+    const dx = Math.random() - 0.5;
+    const dy = Math.random() - 0.5;
     const color = colorArray[Math.floor(Math.random() * colorArray.length)];
 
     const circle = new Circle(x, y, radius, dx, dy, color);
@@ -127,7 +127,6 @@ function getDimensions() {
 window.addEventListener('resize', function () {
   // clear the circles from the page
   circleArray = [];
-  console.log(circleArray);
 
   // clear the timeout
   clearTimeout(timeout);
