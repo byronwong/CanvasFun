@@ -99,7 +99,8 @@ function animate() {
 
 // should this event handler be bound to the canvas rather than the window?
 window.addEventListener('mousemove', (event) => {
-  mouse.x = event.x;
+  console.log(event);
+  mouse.x = event.x; // you can use event.clientX and event.clientY
   mouse.y = event.y;
 });
 
